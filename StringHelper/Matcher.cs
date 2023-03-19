@@ -95,7 +95,7 @@ namespace StringHelper
          * - Remueve todos los espacios multiples
          * - Saca espacios anteriores y posteriores de la cadena
          */
-        public static string? Normalizar(string cadena)
+        public static string Normalizar(string cadena)
         {
             if(cadena == null) return null;
             cadena = cadena + " ";
@@ -112,7 +112,7 @@ namespace StringHelper
          * De esta manera se puede garantizar que Río es lo mismo que Rio
          * Ejemplo: Reemplaza Ñ por N o Ó por O
          */
-        public static string? Unificar(string texto)
+        public static string Unificar(string texto)
         {
             if (texto == null) return null;
             return new String(
@@ -124,7 +124,7 @@ namespace StringHelper
 
         private class Cadena
         {
-            public string? Valor { get; set; }
+            public string Valor { get; set; }
             public double Puntaje { get; set; } = 0;
         }
     }
