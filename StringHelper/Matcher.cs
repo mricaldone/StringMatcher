@@ -17,8 +17,8 @@ namespace StringHelper
             var busquedaExacta = BusquedaExacta(cadenaBuscada, cadenas);
             if (busquedaExacta != null) return busquedaExacta;
 
-            var busquedaPorPuntaje = BusquedaPorProbabilidad(cadenaBuscada, cadenas);
-            if (busquedaPorPuntaje != null) return busquedaPorPuntaje;
+            var busquedaPorProbabilidad = BusquedaPorProbabilidad(cadenaBuscada, cadenas);
+            if (busquedaPorProbabilidad != null) return busquedaPorProbabilidad;
 
             return null;
         }
@@ -39,8 +39,8 @@ namespace StringHelper
         }
 
         /*
-         *  Busca una cadena en una lista de cadenas asignandole un puntaje. 
-         *  Devuelve la de mayor puntaje, es decir la que mayor coincidencia de secuencias tiene.
+         *  Busca una cadena en una lista de cadenas asignandole una probabilidad. 
+         *  Devuelve la de mayor probabilidad, es decir la que mayor coincidencia de secuencias tiene.
          */
         public static string BusquedaPorProbabilidad(string cadenaBuscada, IEnumerable<string> cadenas)
         {
@@ -50,18 +50,18 @@ namespace StringHelper
             var encontrados = new List<Cadena>();
             foreach (var cadena in cadenas)
             {
-                var cadenaConPuntaje = new Cadena { Valor = cadena, Probabilidad = 0 };
+                var cadenaConProbabilidad = new Cadena { Valor = cadena, Probabilidad = 0 };
                 var cadenaNormalizada = Normalizar(cadena);
-                cadenaConPuntaje.Probabilidad += ObtenerProbabilidad(cadenaBuscada, cadenaNormalizada);
-                encontrados.Add(cadenaConPuntaje);
+                cadenaConProbabilidad.Probabilidad += ObtenerProbabilidad(cadenaBuscada, cadenaNormalizada);
+                encontrados.Add(cadenaConProbabilidad);
             }
             var ordenados = (from e in encontrados orderby e.Probabilidad descending select e).ToList();
             return (from o in ordenados select o.Valor).FirstOrDefault();
         }
 
         /*
-         *  Obtiene el puntaje de una cadena dentro de un texto. 
-         *  Cuanto mayor es la coincidencia de secuencias dentro de un texto, mayor es el puntaje.
+         *  Obtiene la probabilidad de una cadena en un texto. 
+         *  Cuanto mayor es la coincidencia de secuencias dentro de un texto, mayor es la probabilidad.
          */
         public static double ObtenerProbabilidad(string cadenaBuscada, string texto)
         {

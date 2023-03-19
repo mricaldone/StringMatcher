@@ -55,7 +55,7 @@ namespace StringHelper.Test
         }
 
         [Fact]
-        public void BuscarMejorEligeLaDeMejorPuntaje()
+        public void BuscarMejorEligeLaDeMejorProbabilidad()
         {
             //Arrange
             var cadenaBuscada = "palabra";
@@ -264,9 +264,9 @@ namespace StringHelper.Test
             string cadena = "puan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(1, puntaje);
+            Assert.Equal(1, probabilidad);
         }
 
         [Fact]
@@ -276,9 +276,9 @@ namespace StringHelper.Test
             string cadena = "puax";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.6, puntaje);
+            Assert.Equal(0.6, probabilidad);
         }
 
         [Fact]
@@ -288,9 +288,9 @@ namespace StringHelper.Test
             string cadena = "puxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.4, puntaje);
+            Assert.Equal(0.4, probabilidad);
         }
 
         [Fact]
@@ -300,9 +300,9 @@ namespace StringHelper.Test
             string cadena = "pxan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.4, puntaje);
+            Assert.Equal(0.4, probabilidad);
         }
 
         [Fact]
@@ -312,9 +312,9 @@ namespace StringHelper.Test
             string cadena = "xuan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.6, puntaje);
+            Assert.Equal(0.6, probabilidad);
         }
 
         [Fact]
@@ -324,9 +324,9 @@ namespace StringHelper.Test
             string cadena = "puxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.3, puntaje);
+            Assert.Equal(0.3, probabilidad);
         }
 
         [Fact]
@@ -336,9 +336,9 @@ namespace StringHelper.Test
             string cadena = "pxxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.2, puntaje);
+            Assert.Equal(0.2, probabilidad);
         }
 
         [Fact]
@@ -348,9 +348,9 @@ namespace StringHelper.Test
             string cadena = "xxan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.3, puntaje);
+            Assert.Equal(0.3, probabilidad);
         }
 
         [Fact]
@@ -360,9 +360,9 @@ namespace StringHelper.Test
             string cadena = "pxxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.1, puntaje);
+            Assert.Equal(0.1, probabilidad);
         }
 
         [Fact]
@@ -372,9 +372,9 @@ namespace StringHelper.Test
             string cadena = "xxxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0.1, puntaje);
+            Assert.Equal(0.1, probabilidad);
         }
 
         [Fact]
@@ -384,9 +384,9 @@ namespace StringHelper.Test
             string cadena = "xxxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0, puntaje);
+            Assert.Equal(0, probabilidad);
         }
 
         [Fact]
@@ -396,9 +396,9 @@ namespace StringHelper.Test
             string? cadena = null;
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0, puntaje);
+            Assert.Equal(0, probabilidad);
         }
 
         [Fact]
@@ -408,9 +408,9 @@ namespace StringHelper.Test
             string cadena = string.Empty;
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
+            var probabilidad = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(0, puntaje);
+            Assert.Equal(0, probabilidad);
         }
 
         #endregion
