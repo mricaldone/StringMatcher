@@ -12,7 +12,7 @@ namespace StringHelper
         /*
          *  Busca la mejor coincidencia de una cadena en una lista de cadenas.
          */
-        public static string? BuscarMejor(string? cadenaBuscada, IEnumerable<string?> cadenas)
+        public static string BuscarMejor(string cadenaBuscada, IEnumerable<string> cadenas)
         {
             var busquedaExacta = BusquedaExacta(cadenaBuscada, cadenas);
             if (busquedaExacta != null) return busquedaExacta;
@@ -27,7 +27,7 @@ namespace StringHelper
          *  Busca la cadena exacta en una lista de cadenas.
          *  Devuelve null si no la encuentra.
          */
-        public static string? BusquedaExacta(string? cadenaBuscada, IEnumerable<string?> cadenas)
+        public static string BusquedaExacta(string cadenaBuscada, IEnumerable<string> cadenas)
         {
             cadenaBuscada = Normalizar(cadenaBuscada);
             foreach (var cadena in cadenas)
@@ -41,7 +41,7 @@ namespace StringHelper
          *  Busca una cadena en una lista de cadenas asignandole un puntaje. 
          *  Devuelve la de mayor puntaje, es decir la que mayor coincidencia de secuencias tiene.
          */
-        public static string? BuscarPorPuntaje(string? cadenaBuscada, IEnumerable<string?> cadenas)
+        public static string BuscarPorPuntaje(string cadenaBuscada, IEnumerable<string> cadenas)
         {
             cadenaBuscada = Normalizar(cadenaBuscada);
             if (cadenaBuscada == null) return null;
@@ -50,32 +50,17 @@ namespace StringHelper
             {
                 var cadenaConPuntaje = new Cadena { Valor = cadena, Puntaje = 0 };
                 var cadenaNormalizada = Normalizar(cadena);
-                var palabrasBuscadas = cadenaBuscada.Split(' ');
-                cadenaConPuntaje.Puntaje += ObtenerPuntaje(palabrasBuscadas, cadenaNormalizada);
+                cadenaConPuntaje.Puntaje += ObtenerPuntaje(cadenaBuscada, cadenaNormalizada);
                 encontrados.Add(cadenaConPuntaje);
             }
             return (from e in encontrados orderby e.Puntaje descending select e.Valor).FirstOrDefault();
         }
 
         /*
-         *  Obtiene la sumatoria de puntaje de todas las cadenas proporcionadas dentro de un texto.
-         *  Cuanto mayor es la coincidencia de secuencias dentro de un texto, mayor es el puntaje.
-         */
-        public static double ObtenerPuntaje(string?[] cadenasBuscadas, string? texto)
-        {
-            double puntaje = 0;
-            foreach (var cadenaBuscada in cadenasBuscadas)
-            {
-                puntaje += ObtenerPuntaje(cadenaBuscada, texto);
-            }
-            return puntaje;
-        }
-
-        /*
          *  Obtiene el puntaje de una cadena dentro de un texto. 
          *  Cuanto mayor es la coincidencia de secuencias dentro de un texto, mayor es el puntaje.
          */
-        public static double ObtenerPuntaje(string? cadenaBuscada, string? texto)
+        public static double ObtenerPuntaje(string cadenaBuscada, string texto)
         {
             double puntaje = 0;
             if (cadenaBuscada == null || texto == null) return puntaje;
@@ -96,7 +81,7 @@ namespace StringHelper
         /*
          *  El máximo puntaje que puede tener una cadena.
          */
-        public static double MaxPuntaje(string? cadena)
+        public static double MaxPuntaje(string cadena)
         {
             if(cadena == null) return 0;
             double n = cadena.Length;
@@ -110,7 +95,7 @@ namespace StringHelper
          * - Remueve todos los espacios multiples
          * - Saca espacios anteriores y posteriores de la cadena
          */
-        public static string? Normalizar(string? cadena)
+        public static string? Normalizar(string cadena)
         {
             if(cadena == null) return null;
             cadena = cadena + " ";
@@ -127,7 +112,7 @@ namespace StringHelper
          * De esta manera se puede garantizar que Río es lo mismo que Rio
          * Ejemplo: Reemplaza Ñ por N o Ó por O
          */
-        public static string? Unificar(string? texto)
+        public static string? Unificar(string texto)
         {
             if (texto == null) return null;
             return new String(
