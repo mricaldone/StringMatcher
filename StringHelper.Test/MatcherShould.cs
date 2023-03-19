@@ -9,6 +9,40 @@ namespace StringHelper.Test
         #region BuscarMejor
 
         [Fact]
+        public void BuscarMejorDeListaNullDevuelveNull()
+        {
+            //Arrange
+            var cadenaBuscada = "palabra";
+            //Act
+            var mejorPalabra = Matcher.BuscarMejor(cadenaBuscada, null);
+            //Assert
+            Assert.Null(mejorPalabra);
+        }
+
+        [Fact]
+        public void BuscarMejorDeListaVaciaDevuelveNull()
+        {
+            //Arrange
+            var cadenaBuscada = "palabra";
+            //Act
+            var mejorPalabra = Matcher.BuscarMejor(cadenaBuscada, new List<string>());
+            //Assert
+            Assert.Null(mejorPalabra);
+        }
+
+        [Fact]
+        public void BuscarMejorDeListaDeUnElementoDevuelveEseElemento()
+        {
+            //Arrange
+            var cadenaBuscada = "palabra";
+            var lineas = new List<string>() { "x" };
+            //Act
+            var mejorPalabra = Matcher.BuscarMejor(cadenaBuscada, lineas);
+            //Assert
+            Assert.Equal("x", mejorPalabra);
+        }
+
+        [Fact]
         public void BuscarMejorEligeLaDePalabraExacta()
         {
             //Arrange
@@ -61,6 +95,17 @@ namespace StringHelper.Test
         #region BusquedaExacta
 
         [Fact]
+        public void BusquedaExactaDeListaNullDevuelveNull()
+        {
+            //Arrange
+            var cadenaBuscada = "palabra";
+            //Act
+            var mejorPalabra = Matcher.BusquedaExacta(cadenaBuscada, null);
+            //Assert
+            Assert.Null(mejorPalabra);
+        }
+
+        [Fact]
         public void BusquedaExactaEligePalabraExacta()
         {
             //Arrange
@@ -98,17 +143,27 @@ namespace StringHelper.Test
 
         #endregion
 
-        #region BuscarPorPuntaje
-
+        #region BusquedaPorProbabilidad
 
         [Fact]
-        public void BuscarPorPuntajeEligePalabraExacta()
+        public void BusquedaPorProbabilidadDeListaNullDevuelveNull()
+        {
+            //Arrange
+            var cadenaBuscada = "palabra";
+            //Act
+            var mejorPalabra = Matcher.BusquedaPorProbabilidad(cadenaBuscada, null);
+            //Assert
+            Assert.Null(mejorPalabra);
+        }
+
+        [Fact]
+        public void BusquedaPorProbabilidadEligePalabraExacta()
         {
             //Arrange
             var cadenaBuscada = "palabra";
             var lineas = new List<string>() { "pala", "palabrapalabra", "palabra" };
             //Act
-            var mejorPalabra = Matcher.BuscarPorPuntaje(cadenaBuscada, lineas);
+            var mejorPalabra = Matcher.BusquedaPorProbabilidad(cadenaBuscada, lineas);
             //Assert
             Assert.Equal("palabra", mejorPalabra);
         }
@@ -162,7 +217,7 @@ namespace StringHelper.Test
             //Act
             var cadenaNormalizada = Matcher.Normalizar(cadena);
             //Assert
-            Assert.Equal("LA ATA", cadenaNormalizada);
+            Assert.Equal(" LA ATA ", cadenaNormalizada);
         }
 
         [Fact]
@@ -173,7 +228,7 @@ namespace StringHelper.Test
             //Act
             var cadenaNormalizada = Matcher.Normalizar(cadena);
             //Assert
-            Assert.Equal("ASUNCIN", cadenaNormalizada);
+            Assert.Equal(" ASUNCIN ", cadenaNormalizada);
         }
 
         [Fact]
@@ -184,7 +239,7 @@ namespace StringHelper.Test
             //Act
             var cadenaNormalizada = Matcher.Normalizar(cadena);
             //Assert
-            Assert.Equal("BSAS", cadenaNormalizada);
+            Assert.Equal(" BSAS ", cadenaNormalizada);
         }
 
         [Fact]
@@ -195,165 +250,165 @@ namespace StringHelper.Test
             //Act
             var cadenaNormalizada = Matcher.Normalizar(cadena);
             //Assert
-            Assert.Equal("TUCUMN", cadenaNormalizada);
+            Assert.Equal(" TUCUMN ", cadenaNormalizada);
         }
 
         #endregion
 
-        #region ObtenerPuntaje
+        #region ObtenerProbabilidad
 
         [Fact]
-        public void ObtenerPuntajeDePuanEnPuanEs10()
+        public void ObtenerProbabilidadDePuanEnPuanEs_1()
         {
             //Arrange
             string cadena = "puan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(10, puntaje);
+            Assert.Equal(1, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePuaxEnPuanEs6()
+        public void ObtenerProbabilidadDePuaxEnPuanEs_06()
         {
             //Arrange
             string cadena = "puax";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(6, puntaje);
+            Assert.Equal(0.6, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePuxnEnPuanEs4()
+        public void ObtenerProbabilidadDePuxnEnPuanEs_04()
         {
             //Arrange
             string cadena = "puxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(4, puntaje);
+            Assert.Equal(0.4, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePxanEnPuanEs4()
+        public void ObtenerProbabilidadDePxanEnPuanEs_04()
         {
             //Arrange
             string cadena = "pxan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(4, puntaje);
+            Assert.Equal(0.4, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeXuanEnPuanEs6()
+        public void ObtenerProbabilidadDeXuanEnPuanEs_06()
         {
             //Arrange
             string cadena = "xuan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(6, puntaje);
+            Assert.Equal(0.6, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePuxxEnPuanEs3()
+        public void ObtenerProbabilidadDePuxxEnPuanEs_03()
         {
             //Arrange
             string cadena = "puxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(3, puntaje);
+            Assert.Equal(0.3, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePxxnEnPuanEs2()
+        public void ObtenerProbabilidadDePxxnEnPuanEs_02()
         {
             //Arrange
             string cadena = "pxxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(2, puntaje);
+            Assert.Equal(0.2, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeXxanEnPuanEs3()
+        public void ObtenerProbabilidadDeXxanEnPuanEs_03()
         {
             //Arrange
             string cadena = "xxan";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(3, puntaje);
+            Assert.Equal(0.3, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDePxxxEnPuanEs1()
+        public void ObtenerProbabilidadDePxxxEnPuanEs_01()
         {
             //Arrange
             string cadena = "pxxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(1, puntaje);
+            Assert.Equal(0.1, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeXxxnEnPuanEs1()
+        public void ObtenerProbabilidadDeXxxnEnPuanEs_01()
         {
             //Arrange
             string cadena = "xxxn";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
-            Assert.Equal(1, puntaje);
+            Assert.Equal(0.1, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeXxxxEnPuanEs0()
+        public void ObtenerProbabilidadDeXxxxEnPuanEs_0()
         {
             //Arrange
             string cadena = "xxxx";
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
             Assert.Equal(0, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeNullEnPuanEs0()
+        public void ObtenerProbabilidadDeNullEnPuanEs_0()
         {
             //Arrange
             string? cadena = null;
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
             Assert.Equal(0, puntaje);
         }
 
         [Fact]
-        public void ObtenerPuntajeDeEmptyEnPuanEs0()
+        public void ObtenerProbabilidadDeEmptyEnPuanEs_0()
         {
             //Arrange
             string cadena = string.Empty;
             string texto = "puan";
             //Act
-            var puntaje = Matcher.ObtenerPuntaje(cadena, texto);
+            var puntaje = Matcher.ObtenerProbabilidad(cadena, texto);
             //Assert
             Assert.Equal(0, puntaje);
         }

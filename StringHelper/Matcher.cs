@@ -17,7 +17,7 @@ namespace StringHelper
             var busquedaExacta = BusquedaExacta(cadenaBuscada, cadenas);
             if (busquedaExacta != null) return busquedaExacta;
 
-            var busquedaPorPuntaje = BuscarPorPuntaje(cadenaBuscada, cadenas);
+            var busquedaPorPuntaje = BusquedaPorProbabilidad(cadenaBuscada, cadenas);
             if (busquedaPorPuntaje != null) return busquedaPorPuntaje;
 
             return null;
@@ -29,6 +29,7 @@ namespace StringHelper
          */
         public static string BusquedaExacta(string cadenaBuscada, IEnumerable<string> cadenas)
         {
+            if (cadenas == null) return null;
             cadenaBuscada = Normalizar(cadenaBuscada);
             foreach (var cadena in cadenas)
             {
@@ -41,26 +42,28 @@ namespace StringHelper
          *  Busca una cadena en una lista de cadenas asignandole un puntaje. 
          *  Devuelve la de mayor puntaje, es decir la que mayor coincidencia de secuencias tiene.
          */
-        public static string BuscarPorPuntaje(string cadenaBuscada, IEnumerable<string> cadenas)
+        public static string BusquedaPorProbabilidad(string cadenaBuscada, IEnumerable<string> cadenas)
         {
+            if(cadenas == null) return null;
             cadenaBuscada = Normalizar(cadenaBuscada);
             if (cadenaBuscada == null) return null;
             var encontrados = new List<Cadena>();
             foreach (var cadena in cadenas)
             {
-                var cadenaConPuntaje = new Cadena { Valor = cadena, Puntaje = 0 };
+                var cadenaConPuntaje = new Cadena { Valor = cadena, Probabilidad = 0 };
                 var cadenaNormalizada = Normalizar(cadena);
-                cadenaConPuntaje.Puntaje += ObtenerPuntaje(cadenaBuscada, cadenaNormalizada);
+                cadenaConPuntaje.Probabilidad += ObtenerProbabilidad(cadenaBuscada, cadenaNormalizada);
                 encontrados.Add(cadenaConPuntaje);
             }
-            return (from e in encontrados orderby e.Puntaje descending select e.Valor).FirstOrDefault();
+            var ordenados = (from e in encontrados orderby e.Probabilidad descending select e).ToList();
+            return (from o in ordenados select o.Valor).FirstOrDefault();
         }
 
         /*
          *  Obtiene el puntaje de una cadena dentro de un texto. 
          *  Cuanto mayor es la coincidencia de secuencias dentro de un texto, mayor es el puntaje.
          */
-        public static double ObtenerPuntaje(string cadenaBuscada, string texto)
+        public static double ObtenerProbabilidad(string cadenaBuscada, string texto)
         {
             double puntaje = 0;
             if (cadenaBuscada == null || texto == null) return puntaje;
@@ -75,7 +78,8 @@ namespace StringHelper
                     puntaje += 1.0 / match.Count;
                 }
             }
-            return puntaje;
+            var maxPuntaje = MaxPuntaje(cadenaBuscada);
+            return maxPuntaje == 0 ? 0 : puntaje / maxPuntaje;
         }
         
         /*
@@ -98,13 +102,12 @@ namespace StringHelper
         public static string Normalizar(string cadena)
         {
             if(cadena == null) return null;
-            cadena = cadena + " ";
             cadena = cadena.ToUpper();
             //valor = StringHelper.Unificar(valor);
             //valor = valor.Replace(".", " ");
             cadena = Regex.Replace(cadena, @"[^A-Z0-9 ]+", "");
             cadena = Regex.Replace(cadena, @"\s+", " ");
-            return cadena.Trim();
+            return " " + cadena.Trim() + " ";
         }
 
         /*
@@ -125,7 +128,7 @@ namespace StringHelper
         private class Cadena
         {
             public string Valor { get; set; }
-            public double Puntaje { get; set; } = 0;
+            public double Probabilidad { get; set; } = 0;
         }
     }
 }
